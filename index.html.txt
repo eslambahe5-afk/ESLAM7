@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(145deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120,119,198,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,119,198,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120,219,255,0.3) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 45px 35px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.15),
+                0 0 0 1px rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 2;
+            animation: cardSlide 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes cardSlide {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .logo-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .logo p {
+            color: #64748b;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 18px 20px 18px 50px;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            background: #f8fafc;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #334155;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus + .input-icon {
+            opacity: 1;
+            color: #667eea;
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .remember-checkbox input {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+
+        .forgot-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .forgot-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .user-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #bae6fd;
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 25px;
+            display: none;
+            text-align: center;
+        }
+
+        .user-section.active {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .user-info h3 {
+            color: #1e3c72;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .user-info p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+            text-align: center;
+        }
+
+        .message.error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .message.success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 35px 25px;
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+            </div>
+            <h1>الدخول للحساب</h1>
+            <p>قم بتسجيل الدخول لبدء تجربتك</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <input type="email" class="form-input" id="email" placeholder="البريد الإلكتروني" required>
+            </div>
+
+            <div class="form-group">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm-1-5h2V6c0-1.1-.9-2-2-2s-2 .9-2 2v6z"/>
+                </svg>
+                <input type="password" class="form-input" id="password" placeholder="كلمة المرور" required>
+            </div>
+
+            <div class="remember-row">
+                <label class="remember-checkbox">
+                    <input type="checkbox" id="rememberMe">
+                    <span>تذكرني</span>
+                </label>
+                <a href="#" class="forgot-link" onclick="forgotPassword(event)">نسيت كلمة المرور؟</a>
+            </div>
+
+            <button type="submit" class="login-btn">
+                دخول للحساب
+            </button>
+
+            <div id="message" class="message"></div>
+        </form>
+
+        <div id="userSection" class="user-section">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+                <h3 id="userName">المستخدم</h3>
+                <p id="userEmail">-</p>
+                <p id="loginDate">-</p>
+            </div>
+            <button type="button" class="logout-btn" onclick="logoutUser()">خروج</button>
+        </div>
+    </div>
+
+    <script>
+        // تحميل حالة المستخدم عند بدء الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserSession();
+        });
+
+        // نموذج تسجيل الدخول
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('rememberMe').checked;
+            
+            // التحقق من البيانات
+            if (!validateEmail(email)) {
+                showMessage('⚠️ الرجاء إدخال بريد إلكتروني صحيح', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage('⚠️ كلمة المرور قصيرة جداً (6 أحرف كحد أدنى)', 'error');
+                return;
+            }
+
+            // حفظ جلسة المستخدم
+            saveUserSession(email, remember);
+            
+            // إخفاء النموذج وإظهار قسم المستخدم
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('userSection').classList.add('active');
+            
+            showMessage('✅ تم تسجيل الدخول بنجاح', 'success');
+        });
+
+        // حفظ جلسة المستخدم في LocalStorage
+        function saveUserSession(email, remember) {
+            const sessionData = {
+                email: email,
+                loginTime: new Date().toLocaleString('ar-EG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }),
+                remember: remember,
+                timestamp: Date.now()
+            };
+            
+            localStorage.setItem('userSession', JSON.stringify(sessionData));
+            updateUserDisplay(sessionData);
+        }
+
+        // تحميل جلسة المستخدم
+        function loadUserSession() {
+            const sessionData = localStorage.getItem('userSession');
+            if (sessionData) {
+                const data = JSON.parse(sessionData);
+                // التحقق من صلاحية الجلسة (24 ساعة)
+                if (Date.now() - data.timestamp < 24 * 60 * 60 * 1000) {
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('userSection').classList.add('active');
+                    updateUserDisplay(data);
+                }
+            }
+        }
+
+        // تحديث عرض بيانات المستخدم
+        function updateUserDisplay(data) {
+            document.getElementById('userName').textContent = data.email.split('@')[0];
+            document.getElementById('userEmail').textContent = data.email;
+            document.getElementById('loginDate').textContent = `آخر دخول: ${data.loginTime}`;
+        }
+
+        // تسجيل الخروج
+        function logoutUser() {
+            localStorage.removeItem('userSession');
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('userSection').classList.remove('active');
+            document.getElementById('loginForm').reset();
+            showMessage('👋 تم تسجيل الخروج بنجاح', 'success');
+        }
+
+        // التحقق من البريد الإلكتروني
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // عرض رسائل التنبيه
+        function showMessage(text, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${type}`;
+            messageEl.style.display = 'block';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 4000);
+        }
+
+        // نسيت كلمة المرور
+        function forgotPassword(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            if (email) {
+                showMessage('📧 تم إرسال رابط إعادة تعيين كلمة المرور', 'success');
+            } else {
+                showMessage('⚠️ يرجى إدخال بريدك الإلكتروني أولاً', 'error');
+            }
+        }
+
+        // تنظيف LocalStorage عند إغلاق الصفحة (اختياري)
+        window.addEventListener('beforeunload', function() {
+            const session = JSON.parse(localStorage.getItem('userSession') || '{}');
+            if (!session.remember)
